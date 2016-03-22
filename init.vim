@@ -27,7 +27,8 @@ Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'wincent/Command-T'
+"broken on neovim :(
+"Plug 'wincent/Command-T'
 Plug 'wting/rust.vim'
 
 call plug#end()
