@@ -12,10 +12,11 @@ call plug#begin()
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'SirVer/ultisnips'
+"Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe', { 'do': 'python2 install.py --clang-completer --omnisharp-completer' }
 Plug 'kopischke/vim-stay'
 Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
 Plug 'lyuts/vim-rtags'
 Plug 'majutsushi/tagbar'
 Plug 'rdnetto/YCM-Generator', { 'branch':'stable' }
@@ -53,6 +54,7 @@ set nomousef
 set novisualbell
 set number
 set relativenumber
+set shada='100000,f1,<500,:100000,@100000,/100000,%1
 set shortmess+=at
 set showcmd
 set showfulltag
@@ -62,11 +64,10 @@ set switchbuf=usetab,newtab
 set title
 set titlestring=%<%F
 set undolevels=1000
-set viminfo='1000,f1,<500,:1000,@1000,/1000,%1
+set viminfo='100000,f1,<500,:100000,@100000,/100000,%1
 set wildmenu
 set wildmode=list:full
-colorscheme desert
-set bg=dark
+colorscheme default
 syntax on
 
 " text layout settings 
@@ -96,6 +97,7 @@ set noignorecase
 " omnicompletion 
 set completeopt=menu,preview
 set tags+=~/.vim/systags 
+set tags+=TAGS
 
 " set comment formats 
 set comments-=s1:/*,mb:*,ex:*/ 
@@ -128,10 +130,14 @@ filetype indent on
 
 " shortcuts
 nnoremap <silent><C-F11> :let @/=''<cr>
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>k
-noremap <c-l> <c-w>l
-noremap <c-h> <c-w>h
+tnoremap <A-h> <C-\><C-n><C-w>h
+tnoremap <A-j> <C-\><C-n><C-w>j
+tnoremap <A-k> <C-\><C-n><C-w>k
+tnoremap <A-l> <C-\><C-n><C-w>l
+nnoremap <A-h> <C-w>h
+nnoremap <A-j> <C-w>j
+nnoremap <A-k> <C-w>k
+nnoremap <A-l> <C-w>l
 "noremap <leader>td <Plug>TaskList
 nnoremap <silent> <F5> :GundoToggle<cr>
 "noremap <leader>nt :NERDTreeToggle<cr>
@@ -152,6 +158,10 @@ let g:tagbar_vertical = 1
 let g:tagbar_iconchars = ['▸', '▾']
 let g:SuperTabDefaultCompletionType = "context"
 let g:ycm_confirm_extra_conf = 0
+if !exists("g:ycm_semantic_triggers")
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
 
 " Breaks things a bit
 "autocmd BufEnter * cd %:p:h
@@ -178,8 +188,13 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
-autocmd BufWritePre *.c,*.cpp,*.h,*.java,*.php,*.py :call <SID>StripTrailingWhitespaces()
+"autocmd BufWritePre *.c,*.cpp,*.h,*.java,*.php,*.py :call <SID>StripTrailingWhitespaces()
 
 " Restore position in file
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" NyaoVim configuration
+if exists('g:nyaovim_version')
+    colorscheme zmrok
+endif
 
