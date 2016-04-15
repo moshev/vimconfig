@@ -7,6 +7,7 @@ setlocal smarttab
 setlocal noexpandtab
 setlocal foldmethod=syntax
 setlocal isk-=-
+setlocal isk-=.
 
 "nmap <C-F12> :!ctags -R --c++-kinds=+p  --fields=+iaS --extra=+q %:p:h<CR>
 

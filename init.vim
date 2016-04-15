@@ -12,25 +12,26 @@ call plug#begin()
 Plug 'ConradIrwin/vim-bracketed-paste'
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe', { 'do': 'python2 install.py --clang-completer --omnisharp-completer' }
+Plug 'benekastah/neomake'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'kopischke/vim-stay'
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'lyuts/vim-rtags'
 Plug 'majutsushi/tagbar'
+Plug 'Quramy/tsuquyomi'
 Plug 'rdnetto/YCM-Generator', { 'branch':'stable' }
 Plug 'rking/ag.vim'
-Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim'
 Plug 'tikhomirov/vim-glsl'
 Plug 'tikhomirov/vim-glsl'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-"broken on neovim :(
-"Plug 'wincent/Command-T'
 Plug 'wting/rust.vim'
+
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -54,20 +55,19 @@ set nomousef
 set novisualbell
 set number
 set relativenumber
-set shada='100000,f1,<500,:100000,@100000,/100000,%1
+set shada=!,'100000,f1,<500,:100000,@100000,/100000,%1
 set shortmess+=at
 set showcmd
 set showfulltag
 set showmatch
 set showmode
-set switchbuf=usetab,newtab
+set switchbuf=useopen
 set title
 set titlestring=%<%F
 set undolevels=1000
 set viminfo='100000,f1,<500,:100000,@100000,/100000,%1
 set wildmenu
 set wildmode=list:full
-colorscheme default
 syntax on
 
 " text layout settings 
@@ -95,7 +95,7 @@ set nohlsearch
 set noignorecase 
 
 " omnicompletion 
-set completeopt=menu,preview
+set completeopt=menu,preview,noinsert
 set tags+=~/.vim/systags 
 set tags+=TAGS
 
@@ -154,7 +154,7 @@ nnoremap <silent> gy :YcmCompleter GoTo<CR>
 let g:proj_flags = "gimst"
 let g:pyflakes_use_quickfix = 0
 let g:pep8_map = '<leader>8'
-let g:tagbar_vertical = 1
+let g:tagbar_vertical = 30
 let g:tagbar_iconchars = ['▸', '▾']
 let g:SuperTabDefaultCompletionType = "context"
 let g:ycm_confirm_extra_conf = 0
@@ -195,6 +195,10 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 
 " NyaoVim configuration
 if exists('g:nyaovim_version')
-    colorscheme zmrok
+    set bg=light
+    colorscheme base16-atelierforest
+else
+    set bg=dark
+    colorscheme default
 endif
 
