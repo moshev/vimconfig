@@ -14,6 +14,7 @@ Plug 'Konfekt/FastFold'
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 Plug 'Valloric/YouCompleteMe', { 'do': 'python2 install.py --clang-completer --omnisharp-completer' }
 Plug 'benekastah/neomake'
+Plug 'critiqjo/lldb.nvim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'kopischke/vim-stay'
@@ -138,6 +139,10 @@ nnoremap <A-h> <C-w>h
 nnoremap <A-j> <C-w>j
 nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
+nnoremap <C-PageUp> gT
+nnoremap <C-PageDown> gt
+inoremap <C-PageUp> <Esc>gT
+inoremap <C-PageDown> <Esc>gt
 "noremap <leader>td <Plug>TaskList
 nnoremap <silent> <F5> :GundoToggle<cr>
 "noremap <leader>nt :NERDTreeToggle<cr>
@@ -148,13 +153,24 @@ inoremap <silent> <leader>с :w<CR>
 inoremap <silent> <leader>s <C-o>:w<CR>
 inoremap <silent> <leader>с <C-o>:w<CR>
 nnoremap ]y do]c
-nnoremap <silent> gy :YcmCompleter GoTo<CR>
+
+" Plugin mappings
+nnoremap <A-b> <Plug>LLBreakSwitch
+vnoremap <F2> <Plug>LLStdInSelected
+nnoremap <silent> <F4> :LLstdin<CR>
+nnoremap <silent> <F5> :LLmode debug<CR>
+nnoremap <silent> <S-F5> :LLmode code<CR>
+nnoremap <silent> <F8> :LL continue<CR>
+nnoremap <silent> <S-F8> :LL process interrupt<CR>
+nnoremap <silent> <F9> :LL print <C-R>=expand('<cword>')<CR>
+vnoremap <silent> <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
+nnoremap <silent> <silent> gy :YcmCompleter GoTo<CR>
 
 " Plugin configs
 let g:proj_flags = "gimst"
 let g:pyflakes_use_quickfix = 0
 let g:pep8_map = '<leader>8'
-let g:tagbar_vertical = 30
+let g:tagbar_vertical = 0
 let g:tagbar_iconchars = ['▸', '▾']
 let g:SuperTabDefaultCompletionType = "context"
 let g:ycm_confirm_extra_conf = 0
@@ -162,6 +178,7 @@ if !exists("g:ycm_semantic_triggers")
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers['typescript'] = ['.']
+let g:ycm_global_ycm_extra_conf = '/home/moshev/.config/nvim/ycm_global_extra_conf.py'
 
 " Breaks things a bit
 "autocmd BufEnter * cd %:p:h
@@ -195,10 +212,10 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 
 " NyaoVim configuration
 if exists('g:nyaovim_version')
+    colorscheme base16-brewer
     set bg=light
-    colorscheme base16-atelierforest
 else
-    set bg=dark
     colorscheme default
+    set bg=dark
 endif
 
